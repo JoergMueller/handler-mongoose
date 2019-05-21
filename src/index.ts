@@ -1,8 +1,8 @@
-import HandlerMongoose from './libs/handler';
-import { activator } from './libs/types';
+import dotenv from 'dotenv';
+import mongooseLoader from './libs/types';
 
-const handlerMongoose: HandlerMongoose = activator(HandlerMongoose);
+dotenv.config();
 
-handlerMongoose.prepare();
-handlerMongoose.loadConfig();
-handlerMongoose.loadModels(__dirname + '/schemas', ['ts', 'js']);
+mongooseLoader.prepare();
+mongooseLoader.loadConfig();
+mongooseLoader.loadModels(__dirname + '/schemas', ['ts', 'js']);

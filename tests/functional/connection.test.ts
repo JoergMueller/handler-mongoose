@@ -1,14 +1,13 @@
 const mockLogError = jest.fn(console.log); // tslint:disable-line: no-console
 const mockLogFatal = jest.fn(console.log); // tslint:disable-line: no-console
 
-import HandlerMongoose from '../../src/libs/handler';
-import { activator } from '../../src/libs/types';
+import dotenv from 'dotenv';
+import mongooseLoader from './../../src/libs/types';
+dotenv.config();
 
-const handlerMongoose: HandlerMongoose = activator(HandlerMongoose);
-
-handlerMongoose.prepare();
-handlerMongoose.loadConfig();
-handlerMongoose.loadModels(__dirname + '/../../src/schemas', ['ts', 'js']);
+mongooseLoader.prepare();
+mongooseLoader.loadConfig();
+mongooseLoader.loadModels(__dirname + '/../../src/schemas', ['ts', 'js']);
 
 jest.setTimeout(30000);
 
@@ -32,19 +31,21 @@ describe('Functional Testing', () => {
   });
 
   test('it should be establishes and readyState = 2', async (done) => {
-    expect(handlerMongoose.handler.readyState).toBe(2);
+    expect(mongooseLoader.dbhandler.readyState).toBe(2);
     done();
   });
 
   test('create collection and remove', async (done) => {
-    await handlerMongoose.handler.createCollection('myCollection_' + Date.now()).then((collection: any) => {
+    console.log(mongooseLoader.dbhandler.createCollection);
+
+    await mongooseLoader.dbhandler.createCollection('myCollection_' + Date.now()).then((collection: any) => {
       collection.drop();
       done();
     });
   });
 
   test('update entry', async (done) => {
-    const Model = handlerMongoose.handler.model('ExternalRatings');
+    const Model = mongooseLoader.dbhandler.model('ExternalRatings');
     let query = Model.findOne({ service: 'finanzen', user: '57b46782cf79599f6adc007a' });
 
     await query.exec((error: any, document: any) => {
@@ -62,15 +63,15 @@ describe('Functional Testing', () => {
   });
 
   test('shutdown database connection', async (done) => {
-    handlerMongoose.shutDown(done);
+    mongooseLoader.shutDown(done);
   });
 
   test('reactivate', async (done) => {
-    if (handlerMongoose.isActive() === false) {
-      await handlerMongoose.reActivate();
+    if (mongooseLoader.isActive() === false) {
+      await mongooseLoader.reActivate();
     }
 
-    const Model = handlerMongoose.handler.model('ExternalRatings');
+    const Model = mongooseLoader.dbhandler.model('ExternalRatings');
     let query = Model.findOne({ service: 'finanzen' });
 
     await query.exec((error: any, document: any) => {
@@ -81,13 +82,13 @@ describe('Functional Testing', () => {
       expect(document.ratingCount).toStrictEqual(document.ratingCount);
       expect(document.service).toStrictEqual('finanzen');
 
-      handlerMongoose.shutDown(done);
+      mongooseLoader.shutDown(done);
     });
   });
 
   test('it should be closes a connection all jobs finished', async (done) => {
-    if (handlerMongoose.handler.readyState === 2) {
-      handlerMongoose.handler.close(true, done);
+    if (mongooseLoader.dbhandler.readyState === 2) {
+      mongooseLoader.dbhandler.close(true, done);
     } else {
       done();
     }
