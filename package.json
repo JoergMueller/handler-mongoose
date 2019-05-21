@@ -17,7 +17,7 @@
     "test:integration:watch": "jest --config=jest.in.js --watch",
     "test:integration:ci": "jest --config=jest.in.js --verbose",
     "test:functional": "jest --config=jest.fu.js --runInBand --detectOpenHandles --coverage; echo ''",
-    "test:functional:watch": "jest --config=jest.fu.js --runInBand --watch; echo ''",
+    "test:functional:watch": "jest --config=jest.fu.js --runInBand --detectOpenHandles --watch; echo ''",
     "test:functional:ci": "jest --config=jest.fu.js --runInBand --verbose --detectOpenHandles",
     "pretest:functional": "docker-compose up -d && sleep 30",
     "pretest:functional:watch": "docker-compose up -d && sleep 30",
