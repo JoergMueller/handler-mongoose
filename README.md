@@ -1,7 +1,7 @@
 # Mongoose Handler
 
-[![pipeline status](https://git.service.provenexpert.com/modules/handler-mongoose/badges/master/pipeline.svg)](https://git.service.provenexpert.com/modules/handler-mongoose/commits/master)
-[![coverage report](https://git.service.provenexpert.com/modules/handler-mongoose/badges/master/coverage.svg)](https://git.service.provenexpert.com/modules/handler-mongoose/commits/master)
+[![pipeline status](https://github.com/JoergMueller/handler-mongoose/badges/master/pipeline.svg)](https://github.com/JoergMueller/handler-mongoose/commits/master)
+[![coverage report](https://github.com/JoergMueller/handler-mongoose/handler-mongoose/badges/master/coverage.svg)](https://github.com/JoergMueller/handler-mongoose/handler-mongoose/commits/master)
 
 Generate Variable: `handlerMongoose`
 
