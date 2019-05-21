@@ -46,6 +46,7 @@
     "dotenv": "^8.0.0",
     "events": "^3.0.0",
     "mongoose": "^5.5.9",
+    "rxjs": "^6.5.2",
     "rxjs-observable": "0.0.7"
   },
   "devDependencies": {

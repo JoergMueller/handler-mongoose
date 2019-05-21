@@ -12,10 +12,7 @@ export default class HandlerMongoose {
     this.connectStringE.on('load', (cstr: string) => {
       this.cstr = cstr;
 
-      if (this.handler && this.handler.readyState === 2) {
-        return;
-      }
-      this.connect().subscribe((handler: mongoose.Connection) => {
+      this.connect().subscribe((handler: any) => {
         this.handler = handler;
         mongoose.set('useCreateIndex', true);
       });
@@ -25,8 +22,9 @@ export default class HandlerMongoose {
   connect() {
     return new Observable((observer) => {
       if (this.cstr.length > 0) {
-        this.handler = mongoose.createConnection(this.cstr, { useNewUrlParser: true });
-        observer.next(this.handler);
+        let handler = mongoose.createConnection(this.cstr, { useNewUrlParser: true });
+        this.handler = handler;
+        observer.next(handler);
         observer.complete();
       } else {
         this.loadConfig();
