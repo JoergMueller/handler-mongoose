@@ -1,7 +1,7 @@
 # Mongoose Handler
 
 
-Generate Variable: `handlerMongoose`
+Generate Variable: `mongooseLoader`
 
 ```javascript
 import dotenv from 'dotenv';
