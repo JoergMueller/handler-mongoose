@@ -1,11 +1,17 @@
 # Mongoose Handler
 
 
-Generate Variable: `handlerMongoose`
+Generate Variable: `mongooseLoader`
 
 ```javascript
-var Client = handlerMongoose.handler.client;
-var Model = handlerMongoose.handler.model;
+import dotenv from 'dotenv';
+import mongooseLoader from './libs/types';
+
+dotenv.config();
+
+mongooseLoader.prepare();
+mongooseLoader.loadConfig();
+mongooseLoader.loadModels(__dirname + '/schemas', ['ts', 'js']);
 
 var query = Model('ExternalRatings').find({});
 
