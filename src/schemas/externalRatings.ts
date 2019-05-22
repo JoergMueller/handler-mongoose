@@ -24,7 +24,7 @@ const preSchema = {
   deactivationDate: { type: Date, default: null },
 };
 
-const ExternalRatings = (handler: any) => {
+const RatingsExternal = (handler: any) => {
   const Schema = new mongoose.Schema(preSchema, {
     toObject: {
       getters: true,
@@ -58,8 +58,8 @@ const ExternalRatings = (handler: any) => {
     return '';
   });
 
-  handler.model('ExternalRatings', Schema);
+  handler.model('RatingsExternal', Schema);
   return Schema;
 };
 
-export default ExternalRatings;
+export default RatingsExternal;

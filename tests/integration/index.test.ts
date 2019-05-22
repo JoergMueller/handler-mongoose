@@ -1,34 +1,5 @@
 const mockDateNow = jest.spyOn(Date, 'now').mockImplementation();
 
-const mockLogError = jest.fn();
-const mockLogFatal = jest.fn();
-const mockAmqpConnect = jest.fn();
-const mockAmqpChannel = jest.fn();
-const mockAmqpConnectOn = jest.fn();
-const mockAmqpChannelOn = jest.fn();
-const mockAmqpChannelClose = jest.fn();
-const mockAmqpPrefetch = jest.fn();
-const mockAmqpAssertExchange = jest.fn();
-const mockAmqpAssertQueue = jest.fn();
-const mockAmqpBindQueue = jest.fn();
-const mockAmqpPublish = jest.fn();
-const mockAmqpConsume = jest.fn();
-const mockAmqpAck = jest.fn();
-const mockAmqpNack = jest.fn();
-const mockAmqpCancel = jest.fn();
-
-jest.mock('amqplib', () => ({ connect: mockAmqpConnect }));
-
-import Instance from '../../src/libs/instance';
-
-import Publisher from '../../src/libs/services/publisher';
-import Service from '../../src/libs/services/service';
-import Worker from '../../src/libs/services/worker';
-
-import connect from '../../src/index';
-
-import { consumerDataType, SubType } from '../../src/libs/types';
-
 /**
  *
  */
@@ -49,70 +20,9 @@ describe('Integration Testing', () => {
       child: () => log,
       debug: () => {}, // tslint:disable-line: no-empty
       info: () => {}, // tslint:disable-line: no-empty
-      error: mockLogError,
-      fatal: mockLogFatal,
+      error: 'soon',
+      fatal: 'error',
     } as any;
-
-    returnConnect = {
-      createChannel: mockAmqpChannel,
-      on: mockAmqpConnectOn,
-    };
-    returnChannel = {
-      on: mockAmqpChannelOn,
-      prefetch: mockAmqpPrefetch,
-      assertExchange: mockAmqpAssertExchange,
-      assertQueue: mockAmqpAssertQueue,
-      bindQueue: mockAmqpBindQueue,
-      publish: mockAmqpPublish,
-      consume: mockAmqpConsume,
-      ack: mockAmqpAck,
-      nack: mockAmqpNack,
-      cancel: mockAmqpCancel,
-      close: mockAmqpChannelClose,
-    };
-
-    queueName = 'randome-queue-name';
-    queueTag = 'randome-queue-tag';
-    payload = { z: 42 };
-    message = {
-      content: Buffer.from(JSON.stringify(payload), 'utf8'),
-      properties: {
-        messageId: 'message-id',
-      },
-    };
-
-    mockAmqpConnect.mockResolvedValue(returnConnect);
-    mockAmqpChannel.mockResolvedValue(returnChannel);
-    mockAmqpAssertQueue.mockResolvedValue({ queue: queueName });
-    mockAmqpConsume.mockResolvedValue({ consumerTag: queueTag });
-  });
-
-  /**
-   *
-   */
-  test('it should be create a instance when connect() is called', async () => {
-    const instance = await connect(
-      log,
-      'rabbitmq-url',
-      2,
-    );
-
-    expect(instance).toBeInstanceOf(Instance);
-
-    expect(mockAmqpConnect.mock.calls.length).toBe(1);
-    expect(mockAmqpConnect.mock.calls[0]).toEqual(['rabbitmq-url', {}]);
-
-    expect(mockAmqpChannel.mock.calls.length).toBe(1);
-    expect(mockAmqpChannel.mock.calls[0]).toEqual([]);
-
-    expect(mockAmqpPrefetch.mock.calls.length).toBe(1);
-    expect(mockAmqpPrefetch.mock.calls[0]).toEqual([2]);
-
-    expect(mockLogError.mock.calls.length).toBe(0);
-    expect(mockLogFatal.mock.calls.length).toBe(0);
-
-    expect(mockAmqpConnectOn.mock.calls.length).toBe(2);
-    expect(mockAmqpChannelOn.mock.calls.length).toBe(2);
   });
 
   const serviceValues: Array<[keyof SubType<Instance, (...args: any[]) => any>, any, string, number?]> = [

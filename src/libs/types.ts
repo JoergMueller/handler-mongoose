@@ -55,7 +55,7 @@ export class MongooseLoader {
       this.dbhandler = mongoose.createConnection(this.connstr, { useNewUrlParser: true });
       mongoose.set('useCreateIndex', true);
     }
-    readdirSync(Path).forEach((file) => {
+    await readdirSync(Path).forEach((file) => {
       this.schemafiles.push(file);
 
       const name = this.validateName(file, allowedExt);
@@ -63,14 +63,11 @@ export class MongooseLoader {
         require(Path + '/' + name).default(this.dbhandler);
       }
     });
+    return this;
   }
 
   hasModel(MName: string) {
-    return undefined === this.dbhandler.modelNames()[MName] ? false : this.dbhandler.modelNames()[MName];
-  }
-
-  getModel(MName: string = '') {
-    return this.hasModel(MName);
+    return undefined === this.dbhandler.model(MName) ? false : this.dbhandler.model(MName);
   }
 
   validateName(file: string, allowedExt: string[] = ['ts', 'js']): string | boolean {
