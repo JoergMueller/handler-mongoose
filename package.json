@@ -45,7 +45,7 @@
     "async": "^3.0.0",
     "dotenv": "^8.0.0",
     "events": "^3.0.0",
-    "lodash": ">=4.17.13",
+    "lodash": ">=4.17.21",
     "mongoose": "^5.5.9",
     "rxjs": "^6.5.2",
     "rxjs-observable": "0.0.7"
