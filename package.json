@@ -46,7 +46,7 @@
     "dotenv": "^8.0.0",
     "events": "^3.0.0",
     "lodash": ">=4.17.13",
-    "mongoose": "^5.5.9",
+    "mongoose": "^5.7.5",
     "rxjs": "^6.5.2",
     "rxjs-observable": "0.0.7"
   },
